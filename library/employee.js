@@ -13,7 +13,7 @@ class Employee {
     }
 
     getId(){
-        return this.state;
+        return this.id;
     }
 
     getEmail(){
