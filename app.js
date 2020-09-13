@@ -10,7 +10,213 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const teamMembers = [];
 
+function askManager() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "managerName",
+            message: "What is your name?",
+            validate: answer => {
+                if(answer !== "") {
+                    return true;
+                }
+                return "Please enter your name"
+            }
+        },
+        {
+            type: "input",
+            name: "managerId",
+            message: "What is ID?",
+            validate: answer => {
+                const pass = answer.match(/^[0-9]*$/);
+                if(pass) {
+                    return true;
+                }
+                return "Only digits please"
+            }
+        },
+        {
+            type: "input",
+            name: "managerEmail",
+            message: "What is your email?",
+            validate: answer =>{
+                const pass = answer.match(/[^\s]*@[a-z0-9.-]*/);
+                if (pass){
+                    return true;
+                }
+                return "Enter valid email"
+                
+            }
+        },
+        {
+            type: "input",
+            name: "managerOfficeNumber",
+            message: "What is your Office Number?",
+            validate: answer => {
+                const pass = answer.match(/^[0-9]*$/);
+                if(pass) {
+                    return true;
+                }
+                return "Only digits please"
+            }
+        },
+    ]).then(function(data) {
+      
+        const manager = new Manager(data.managerName,data.managerId,data.managerEmail,data.managerOfficeNumber);
+        console.log(manager);
+        teamMembers.push(manager);
+        addEmployee();
+    })
+
+}
+function askEngineer() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "engineerName",
+            message: "What is your name?",
+            validate: answer => {
+                if(answer !== "") {
+                    return true;
+                }
+                return "Please enter your name"
+            }
+        },
+        {
+            type: "input",
+            name: "engineerId",
+            message: "What is ID?",
+            validate: answer => {
+                const pass = answer.match(/^[0-9]*$/);
+                if(pass) {
+                    return true;
+                }
+                return "Only digits please"
+            }
+        },
+        {
+            type: "input",
+            name: "engineerEmail",
+            message: "What is your email?",
+            validate: answer =>{
+                const pass = answer.match(/[^\s]*@[a-z0-9.-]*/);
+                if (pass){
+                    return true;
+                }
+                return "Enter valid email"
+                
+            }
+        },
+        {
+            type: "input",
+            name: "engineerGithub",
+            message: "What is your Github?",
+            validate: answer => {
+                if(answer !== "") {
+                    return true;
+                }
+                return "Please enter your Github"
+            }
+        },
+    ]).then(function(data) {
+      
+        const engineer = new Engineer(data.engineerName,data.engineerId,data.engineerEmail,data.engineerGithub);
+        console.log(engineer);
+        teamMembers.push(engineer);
+        addEmployee()
+    })
+
+}
+function askIntern() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "internName",
+            message: "What is your name?",
+            validate: answer => {
+                if(answer !== "") {
+                    return true;
+                }
+                return "Please enter your name"
+            }
+        },
+        {
+            type: "input",
+            name: "internId",
+            message: "What is ID?",
+            validate: answer => {
+                const pass = answer.match(/^[0-9]*$/);
+                if(pass) {
+                    return true;
+                }
+                return "Only digits please"
+            }
+        },
+        {
+            type: "input",
+            name: "internEmail",
+            message: "What is your email?",
+            validate: answer =>{
+                const pass = answer.match(/[^\s]*@[a-z0-9.-]*/);
+                if (pass){
+                    return true;
+                }
+                return "Enter valid email"
+                
+            }
+        },
+        {
+            type: "input",
+            name: "internSchool",
+            message: "What is your School?",
+            validate: answer => {
+                if(answer !== "") {
+                    return true;
+                }
+                return "Please enter your School"
+            }
+        },
+    ]).then(function(data) {
+      
+        const intern = new Intern(data.internName,data.internId,data.internEmail,data.internSchool);
+        console.log(intern);
+        teamMembers.push(intern);
+        addEmployee()
+    })
+
+}
+function addEmployee(){
+    inquirer.prompt([{
+        type:"list",
+        name: "switch",
+        message: "Would you like to add another employee",
+        choices: ["add Engineer", "add Intern", "add Manager", "done"]
+    }]).then(function(data){
+        switch(data.switch) {
+            case "add Engineer":
+             askEngineer()
+              break
+            case "add Intern":
+              askIntern()
+              break;
+            case "add Manager":
+              askManager()
+                break;
+            default:
+              createTeam()
+          }
+    })
+}
+
+function createTeam() {
+    if(!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR)
+    }
+    fs.writeFileSync(outputPath, render(teamMembers), "utf-8")
+}
+askManager()
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
