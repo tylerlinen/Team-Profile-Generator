@@ -29,6 +29,6 @@ https://drive.google.com/file/d/1x5LrJ4kXTp1acloApEimxA8md9Kb98uG/view
 ## Contact
 
 Tyler Linen - Tylerlinen@gmail.com 
-Project Link: https://tylerlinen.github.io/React-Directory/
+
 
 
