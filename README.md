@@ -1,7 +1,7 @@
 # About The Project
 <img width="1440" alt="Screen Shot 2021-06-30 at 12 44 42 AM" src="https://user-images.githubusercontent.com/66691586/123906867-f1a31d80-d942-11eb-8cf4-1fa66306d12e.png">
 
-Generates team from users input.  Choose between Engineer, Manager, or Intern.  
+Generates team based on the users input.  Choose between Engineer, Manager, or Intern.  
 
 ## Built With
 
